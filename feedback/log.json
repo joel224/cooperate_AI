@@ -1,0 +1,26 @@
+[
+  {
+    "id": "b149eaad-ad5d-489e-b912-b64e54aa4306",
+    "timestamp": "2025-06-25T05:39:46.214Z",
+    "user": "developer@example.com",
+    "query": "hi",
+    "response": "I couldn't find any relevant information in the documents for your query.",
+    "feedback": "positive"
+  },
+  {
+    "id": "ab2a8626-f27e-4c38-87c7-c92d0fae7238",
+    "timestamp": "2025-06-25T06:53:37.863Z",
+    "user": "developer@example.com",
+    "query": "hi",
+    "response": "I couldn't find any relevant information in the documents for your query.",
+    "feedback": "positive"
+  },
+  {
+    "id": "2727b5ab-5519-4601-9850-eff0103ef772",
+    "timestamp": "2025-06-25T07:49:52.888Z",
+    "user": "admin@example.com",
+    "query": "hi",
+    "response": "I couldn't find any relevant information in the documents for your query.",
+    "feedback": "positive"
+  }
+]
