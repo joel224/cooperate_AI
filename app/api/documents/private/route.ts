@@ -5,8 +5,6 @@ import { pinecone } from '@/lib/pinecone';
 
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
-
-  // This endpoint is for listing public documents, so it should be accessible to any authenticated user.
   if (!session || !session.user?.id) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
@@ -15,20 +13,18 @@ export async function GET(request: Request) {
     const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME!.trim());
     const vectorDimension = Number(process.env.PINECONE_VECTOR_DIMENSION);
     if (!vectorDimension) {
-      // This check is important here as well.
       throw new Error('PINECONE_VECTOR_DIMENSION environment variable not set or invalid.');
     }
     const zeroVector = new Array(vectorDimension).fill(0);
     
-    // Filter for documents that are public and are the latest version.
+    // CRITICAL: Filter for documents that belong ONLY to the current user.
     const queryResult = await pineconeIndex.query({
       vector: zeroVector,
-      filter: { is_public: true, is_latest: true },
-      topK: 1000, // Fetch up to 1000 chunks to find unique document sources.
+      filter: { user_id: session.user.id },
+      topK: 1000, // Fetch enough to find all unique document sources for the user.
       includeMetadata: true,
     });
 
-    // Use a Map to get a unique list of document source names.
     const documents = new Map<string, { name: string, url: string }>();
     queryResult.matches.forEach(match => {
       const source = match.metadata?.source as string;
@@ -39,7 +35,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ files: Array.from(documents.values()) });
   } catch (error) {
-    console.error('Error fetching public documents:', error);
+    console.error('Error fetching private documents:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }

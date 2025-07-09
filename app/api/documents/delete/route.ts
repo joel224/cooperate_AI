@@ -1,42 +1,52 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { unlink } from 'fs/promises';
-import path from 'path';
-import { pinecone } from '@/lib/pinecone'; // Import your Pinecone client
+import { pinecone } from '@/lib/pinecone';
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-
-  // 1. Check for admin role
-  if (!session || session.user?.role !== 'admin') {
-    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  if (!session || !session.user?.id) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
   try {
-    const { filename } = await request.json();
-
-    if (!filename) {
-      return NextResponse.json({ message: 'Filename is required' }, { status: 400 });
+    const { source } = await request.json();
+    if (!source) {
+      return NextResponse.json({ message: 'Document source is required.' }, { status: 400 });
     }
 
-    // Sanitize filename to prevent path traversal (important for deletion too)
-    const sanitizedFilename = path.basename(filename).replace(/[^a-zA-Z0-9._-]/g, '');
+    const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME!.trim());
+    const vectorDimension = Number(process.env.PINECONE_VECTOR_DIMENSION);
+    if (!vectorDimension) {
+      throw new Error('PINECONE_VECTOR_DIMENSION environment variable not set or invalid.');
+    }
+    const zeroVector = new Array(vectorDimension).fill(0);
 
-    // 2. Delete vectors from Pinecone
-    const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME!);
-    await pineconeIndex.deleteMany({ filter: { source: sanitizedFilename } });
-    console.log(`Deleted vectors for ${sanitizedFilename} from Pinecone.`);
+    // Security Check: Find all chunks for the given source that belong to the current user.
+    const queryResult = await pineconeIndex.query({
+      vector: zeroVector,
+      filter: { 
+        '$and': [
+          { source: source },
+          { user_id: session.user.id } // CRITICAL: Ensures user can only query their own files for deletion
+        ]
+      },
+      topK: 10000, // A high number to fetch all chunks for the source
+      includeMetadata: false, // We only need IDs
+      includeValues: false,
+    });
 
-    // 3. Delete the file from the local uploads directory
-    const filePath = path.join(process.cwd(), 'uploads', sanitizedFilename);
-    await unlink(filePath);
-    console.log(`Deleted file ${sanitizedFilename} from local storage.`);
+    const idsToDelete = queryResult.matches.map(match => match.id);
 
-    return NextResponse.json({ message: `Document '${sanitizedFilename}' deleted successfully.` });
+    if (idsToDelete.length === 0) {
+      return NextResponse.json({ message: 'Document not found or you do not have permission to delete it.' }, { status: 404 });
+    }
 
+    await pineconeIndex.deleteMany(idsToDelete);
+
+    return NextResponse.json({ message: `Successfully deleted document "${source}".` });
   } catch (error) {
-    console.error('Delete document API error:', error);
+    console.error('Error deleting document:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }

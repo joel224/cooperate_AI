@@ -1,0 +1,45 @@
+[
+  {
+    "userId": "1",
+    "timestamp": "2025-06-29T08:08:50.548Z",
+    "query": "hi",
+    "response": "{\"response\":\"I couldn't find any relevant information in the documents for your query.\",\"sources\":[]}",
+    "feedback": "positive",
+    "sources": []
+  },
+  {
+    "userId": "1",
+    "timestamp": "2025-06-30T14:32:27.242Z",
+    "query": "hi",
+    "response": "The provided text is the DY Corporation Employee Policy Manual, effective July 1, 2025.\n",
+    "feedback": "positive",
+    "sources": [
+      "DY Corporation Policy .txt",
+      "DY Corporation Policy .txt",
+      "DY Corporation Policy .txt",
+      "DY Corporation Policy .txt"
+    ]
+  },
+  {
+    "userId": "1",
+    "timestamp": "2025-07-03T13:25:42.393Z",
+    "query": "okey so whats the manager's role in this ?",
+    "response": "Managers are responsible for enforcing policies and documenting incidents.\n",
+    "feedback": "positive",
+    "sources": []
+  },
+  {
+    "userId": "1",
+    "timestamp": "2025-07-05T03:58:06.233Z",
+    "query": "hey whats the date in the doc ?",
+    "response": "The effective date of the DY Corporation Employee Policy Manual is July 1, 2025.\n",
+    "feedback": "positive",
+    "sources": [
+      "DY Corporation Policy .txt",
+      "DY Corporation Policy .txt",
+      "DY Corporation Policy .txt",
+      "DY Corporation Policy .txt",
+      "DY Corporation Policy .txt"
+    ]
+  }
+]

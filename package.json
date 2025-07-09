@@ -14,7 +14,9 @@
     "@langchain/community": "^0.3.0",
     "@langchain/core": "^0.3.0",
     "@langchain/google-genai": "^0.1.0",
+    "@libsql/client": "^0.14.0",
     "@pinecone-database/pinecone": "^6.1.1",
+    "drizzle-orm": "^0.44.2",
     "gray-matter": "^4.0.3",
     "lru-cache": "^11.1.0",
     "mammoth": "^1.9.1",
@@ -25,7 +27,8 @@
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
     "rehype-raw": "^7.0.0",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "zod": "^3.25.74"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -36,6 +39,7 @@
     "@types/react-dom": "^19.1.6",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.19",
+    "drizzle-kit": "^0.31.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
     "postcss": "^8.4.39",

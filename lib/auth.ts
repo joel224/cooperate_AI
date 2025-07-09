@@ -20,6 +20,10 @@ export const authOptions: AuthOptions = {
         if (credentials?.username === 'developer' && credentials?.password === 'password') {
           return { id: '1', name: 'Developer User', email: 'developer@example.com' };
         }
+        // Add a 'sales' user for testing role-based access
+        if (credentials?.username === 'sales' && credentials?.password === 'salespassword') {
+                return { id: '3', name: 'Sales User', email: 'sales@example.com' };
+        }
         if (credentials?.username === 'admin' && credentials?.password === 'adminpassword') { // Added admin user
           return { id: '2', name: 'Admin User', email: 'admin@example.com' };
         }
@@ -35,22 +39,26 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // Add role to the JWT token based on user email.
-      // In a production environment, roles would typically be fetched from a database.
-      if (user) {
+      // This is called on sign-in (with user) and on every API call (without user).
+      if (user) { // On sign-in, persist the user's id and role to the token.
+        token.id = user.id;
         if (user.email === 'admin@example.com') {
-          (token as any).role = 'admin';
+          token.role = 'admin';
+        
+        } else if (user.email === 'sales@example.com') {
+                token.role = 'sales';
         } else if (user.email === 'developer@example.com') {
-          (token as any).role = 'developer';
+          token.role = 'developer';
         } else {
-          (token as any).role = 'user';
+          token.role = 'user';
         }
       }
       return token;
     },
     async session({ session, token }) {
-      // Attach the role from the JWT token to the session object.
-      if (token?.role) {
+      // Attach the role and id from the JWT token to the session object.
+      if (session.user) {
+        session.user.id = token.id as string;
         session.user.role = token.role as 'admin' | 'user' | 'developer';
       }
       return session;
