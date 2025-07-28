@@ -1,6 +1,6 @@
 We often see employees 'grapple with understanding' in the full spectrum of their company's operational guidelines, from formal policies to the more subtle aspects of work discipline and cultural norms . 
 
-and it is hard to barkedown things everything mentally at once.
+and it is hard to barkedown everything mentally at once.
 
 things like discipline are unspoken , time and love for our job gets lost in this unstructured thoughts especially if someone is in a struggle in their own life .
 
