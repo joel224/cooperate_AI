@@ -2,7 +2,7 @@ We often see employees 'grapple with understanding' in the full spectrum of thei
 
 and it is hard to barkedown everything mentally at once.
 
-things like discipline are unspoken , time and love for our job gets lost in this unstructured thoughts especially if someone is in a struggle in their own life .
+things like discipline are unspoken , time and love for our job gets lost in this unstructured thoughts especially if someone is in a struggle in their own life outside of work .
 
 BUT if you havint figure out any , Wellcome to copoperte ai (a cooperate compass ) . this helps you solve every doubts within a company (work cultures,work,discipline , any ) and
 
