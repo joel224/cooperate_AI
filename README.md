@@ -6,13 +6,11 @@ and it is hard to barkedown everything mentally at once.
 but I hvae figured out that people can perform well if they have this secret. 
 
 
-things like discipline & time are unspoken ,  and love for our job gets lost in any unstructured thoughts, social medias etc . 
+
+Wellcome to copoperte ai (a cooperate compass ) be your own lead , we help you structure and scale. 
 
 
-BUT if you havint figure out any , Wellcome to copoperte ai (a cooperate compass ) be your own lead , we help you structure and scale. 
-
-
-we helps you solve every doubts within work ,discipline,responsibility or any  while being more aware  , by connecting everything together. sounds good ?
+we helps you solve every doubts within work ,responsibility or any while being more productive . 
 
  
 PS: this includes your own understanding too  .This will Definitely help you Navigate through confusions with clear vision towards our work that we  Love&Care  !.
